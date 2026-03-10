@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обладнання та Послуги - Smart City IoT</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-brand"><i class="fa-solid fa-satellite-dish"></i> IoT System</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Головна (Дашборд)</a></li>
+            <li><a href="services.html" class="active">Обладнання та Послуги</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <h1 style="color: var(--accent); border-bottom: 2px solid #333; padding-bottom: 10px;">Наше обладнання та послуги</h1>
+        <p style="color: #aaa; margin-bottom: 30px;">Перелік доступних IoT-модулів для розгортання в розумному місті.</p>
+
+        <div class="services-grid">
+            <div class="stat-card">
+                <h3 style="color: var(--accent); margin-top: 0;"><i class="fa-solid fa-microchip"></i> Контролер ESP32 LoRa</h3>
+                <p style="font-size: 0.9rem; color: #ccc;">Базовий модуль для збору та передачі даних на великі відстані. Автономне живлення, підтримка MQTT.</p>
+                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 1200 грн</div>
+            </div>
+
+            <div class="stat-card" style="border-left-color: var(--warning);">
+                <h3 style="color: var(--warning); margin-top: 0;"><i class="fa-solid fa-smog"></i> Сенсор якості повітря</h3>
+                <p style="font-size: 0.9rem; color: #ccc;">Модуль для вимірювання AQI (PM2.5 / PM10) та базових газів (CO2, VOC). Інтегрується з базовим контролером.</p>
+                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 850 грн</div>
+            </div>
+
+            <div class="stat-card" style="border-left-color: var(--danger);">
+                <h3 style="color: var(--danger); margin-top: 0;"><i class="fa-solid fa-radiation"></i> Модуль радіаційного контролю</h3>
+                <p style="font-size: 0.9rem; color: #ccc;">Високоточний лічильник Гейгера для моніторингу фонового випромінювання у реальному часі.</p>
+                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 3500 грн</div>
+            </div>
+            
+            <div class="stat-card" style="border-left-color: #a78bfa;">
+                <h3 style="color: #a78bfa; margin-top: 0;"><i class="fa-solid fa-server"></i> Налаштування серверу</h3>
+                <p style="font-size: 0.9rem; color: #ccc;">Послуга розгортання та налаштування хмарного серверу для збору телеметрії та відображення дашборду.</p>
+                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: від 5000 грн</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
