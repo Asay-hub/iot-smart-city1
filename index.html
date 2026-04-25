@@ -145,5 +145,22 @@
     </div>
 
     <script src="script.js"></script>
+
+   <div id="photoModal" class="modal-backdrop" onclick="if(event.target === this) closePhotoModal()">
+    <div class="modal-content" style="max-width: 600px; text-align: center;">
+        <span class="modal-close" onclick="closePhotoModal()">&times;</span>
+        <h2 id="photoModalTitle" style="color: var(--accent); margin-top: 0;">Фото об'єкта</h2>
+        
+        <div style="position: relative; min-height: 200px;">
+            <img id="stationPhoto" src="" alt="IoT Station" style="width: 100%; border-radius: 10px; border: 1px solid #444; margin: 15px 0;">
+        </div>
+        
+        <p id="photoDesc" style="color: #aaa; font-size: 0.9rem; line-height: 1.4;"></p>
+        
+        <button class="btn-save" style="width: 100%; justify-content: center; margin-top: 10px;" onclick="closePhotoModal()">
+            Зрозуміло
+        </button>
+    </div>
+</div>
 </body>
 </html>

@@ -691,3 +691,86 @@ function updateForecast() {
 }
 
 function startClock() { setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('uk-UA'); }, 1000); }
+
+function openPhotoModal(stationId) {
+    const s = stationsData.find(x => x.id === stationId);
+    if (!s) return;
+
+    const modal = document.getElementById('photoModal');
+    const img = document.getElementById('stationPhoto');
+    const title = document.getElementById('photoModalTitle');
+    const desc = document.getElementById('photoDesc');
+
+    title.innerText = `Об'єкт: ${s.name}`;
+    img.src = `https://loremflickr.com/600/400/city,building?lock=${s.id}`;
+    desc.innerText = `Візуалізація інфраструктурного вузла в місті ${s.name}. Координати: ${s.lat}, ${s.lng}`;
+    
+    modal.style.display = 'flex';
+}
+
+function closePhotoModal() {
+    document.getElementById('photoModal').style.display = 'none';
+}
+async function updateCurrencyRates() {
+    try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/UAH');
+        const data = await response.json();
+        const usdRate = (1 / data.rates.USD).toFixed(2);
+        logEvent(`Курс оновлено: 1 USD = ${usdRate} UAH (використано fetch)`);
+    } catch (error) {
+        console.error("Помилка завантаження валют:", error);
+    }
+}
+
+function getNetworkAnalytics() {
+    
+    const critical = stationsData.filter(s => s.temp > 35 || s.battery < 20);
+    
+    const activeCityNames = stationsData
+        .filter(s => s.isOn)
+        .map(s => s.name);
+        
+    const totalBattery = stationsData.reduce((sum, s) => sum + s.battery, 0);
+    const avgBattery = (totalBattery / stationsData.length).toFixed(1);
+
+    console.log("Аналітика:", { critical, activeCityNames, avgBattery });
+    logEvent(`Мережа: Середній заряд батарей по системі: ${avgBattery}%`);
+}
+
+async function runSystemDiagnostic(id) {
+    const s = stationsData.find(x => x.id === id);
+    if (!s) return;
+
+    logEvent(`🚀 Початок повної діагностики вузла [${s.name}]...`);
+    s.isRebooting = true; 
+    simulationLoop(true);
+
+    const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+    try {
+        await delay(1500);
+        logEvent(`🔍 [${s.name}]: Перевірка цілісності БД... OK`);
+        
+        await delay(1500);
+        logEvent(`📡 [${s.name}]: Тестування LoRa-зв'язку... OK`);
+        
+        await delay(1000);
+        s.battery = 100; // Імітую "калібрування" батареї
+        logEvent(`🔋 [${s.name}]: Калібрування живлення завершено.`);
+    } catch (e) {
+        logEvent(`❌ Помилка діагностики вузла ${s.name}`);
+    } finally {
+        s.isRebooting = false;
+        logEvent(`✅ Діагностика вузла [${s.name}] завершена успішно.`);
+        simulationLoop(true);
+    }
+}
+
+let autoLogCounter = 0;
+const statusTimer = setInterval(() => {
+    autoLogCounter++;
+    const activeCount = stationsData.filter(s => s.isOn).length;
+    if (autoLogCounter % 5 === 0) { 
+        logEvent(`📊 Авто-звіт: Системний аптайм в нормі. Вузлів онлайн: ${activeCount}`);
+    }
+}, 2000);

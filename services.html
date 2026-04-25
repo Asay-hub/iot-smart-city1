@@ -6,7 +6,6 @@
     <title>Обладнання та Послуги - Smart City IoT</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,36 +19,37 @@
         </ul>
     </nav>
 
-    <div class="page-container">
-        <h1 style="color: var(--accent); border-bottom: 2px solid #333; padding-bottom: 10px;">Наше обладнання та послуги</h1>
-        <p style="color: #aaa; margin-bottom: 30px;">Перелік доступних IoT-модулів для розгортання в розумному місті.</p>
+    <button class="floating-cart" onclick="toggleCartModal()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cart-count" class="cart-badge">0</span>
+    </button>
 
-        <div class="services-grid">
-            <div class="stat-card">
-                <h3 style="color: var(--accent); margin-top: 0;"><i class="fa-solid fa-microchip"></i> Контролер ESP32 LoRa</h3>
-                <p style="font-size: 0.9rem; color: #ccc;">Базовий модуль для збору та передачі даних на великі відстані. Автономне живлення, підтримка MQTT.</p>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 1200 грн</div>
-            </div>
-
-            <div class="stat-card" style="border-left-color: var(--warning);">
-                <h3 style="color: var(--warning); margin-top: 0;"><i class="fa-solid fa-smog"></i> Сенсор якості повітря</h3>
-                <p style="font-size: 0.9rem; color: #ccc;">Модуль для вимірювання AQI (PM2.5 / PM10) та базових газів (CO2, VOC). Інтегрується з базовим контролером.</p>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 850 грн</div>
-            </div>
-
-            <div class="stat-card" style="border-left-color: var(--danger);">
-                <h3 style="color: var(--danger); margin-top: 0;"><i class="fa-solid fa-radiation"></i> Модуль радіаційного контролю</h3>
-                <p style="font-size: 0.9rem; color: #ccc;">Високоточний лічильник Гейгера для моніторингу фонового випромінювання у реальному часі.</p>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: 3500 грн</div>
-            </div>
+    <div id="cartModal" class="modal-backdrop" onclick="if(event.target === this) toggleCartModal()">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="modal-close" onclick="toggleCartModal()">&times;</span>
+            <h2 style="color: var(--accent); margin-top: 0;"><i class="fa-solid fa-cart-shopping"></i> Ваш кошик</h2>
             
-            <div class="stat-card" style="border-left-color: #a78bfa;">
-                <h3 style="color: #a78bfa; margin-top: 0;"><i class="fa-solid fa-server"></i> Налаштування серверу</h3>
-                <p style="font-size: 0.9rem; color: #ccc;">Послуга розгортання та налаштування хмарного серверу для збору телеметрії та відображення дашборду.</p>
-                <div style="margin-top: 15px; font-weight: bold; color: var(--success);">Ціна: від 5000 грн</div>
+            <div id="cart-items" class="cart-items-container">
+                </div>
+            
+            <div class="cart-summary">
+                <h3>Всього до сплати: <span id="cart-total" style="color: var(--success);">0 грн</span></h3>
+                <button class="btn-save" style="width: 100%; justify-content: center; font-size: 1.1rem;" onclick="checkout()">
+                    Оформити замовлення
+                </button>
             </div>
         </div>
     </div>
 
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="page-container">
+        <h1 style="color: var(--accent); border-bottom: 2px solid #333; padding-bottom: 10px;">Наше обладнання та послуги</h1>
+        <p style="color: #aaa; margin-bottom: 30px;">Перелік доступних IoT-модулів для розгортання в розумному місті. Оберіть потрібне та додайте до кошика.</p>
+
+        <div id="products-container" class="services-grid"></div>
+    </div>
+
+    <script src="cart.js"></script>
 </body>
 </html>
