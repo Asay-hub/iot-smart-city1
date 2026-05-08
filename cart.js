@@ -1,11 +1,21 @@
-const products = [
-    { id: 1, name: "Контролер ESP32 LoRa", price: 1200, desc: "Базовий модуль для збору та передачі даних на великі відстані. Автономне живлення, підтримка MQTT.", icon: "fa-microchip", color: "var(--accent)" },
-    { id: 2, name: "Сенсор якості повітря", price: 850, desc: "Модуль для вимірювання AQI (PM2.5 / PM10) та базових газів (CO2, VOC). Інтегрується з базовим контролером.", icon: "fa-smog", color: "var(--warning)" },
-    { id: 3, name: "Модуль радіаційного контролю", price: 3500, desc: "Високоточний лічильник Гейгера для моніторингу фонового випромінювання у реальному часі.", icon: "fa-radiation", color: "var(--danger)" },
-    { id: 4, name: "Налаштування серверу", price: 5000, desc: "Послуга розгортання та налаштування хмарного серверу для збору телеметрії та відображення дашборду.", icon: "fa-server", color: "#a78bfa" }
-];
+let products = []; 
 
 let cart = JSON.parse(localStorage.getItem('smart_city_cart')) || [];
+
+
+async function fetchProductsFromAPI() {
+    try {
+        const response = await fetch('api.php'); 
+        products = await response.json();        
+        
+        renderProducts();
+        renderCart();
+    } catch (error) {
+        console.error("Помилка завантаження товарів:", error);
+        document.getElementById('products-container').innerHTML = 
+            '<p style="color: var(--danger);">Помилка зв\'язку з сервером. Неможливо завантажити товари.</p>';
+    }
+}
 
 function renderProducts() {
     const container = document.getElementById('products-container');
@@ -126,6 +136,5 @@ function checkout() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    renderCart();
+    fetchProductsFromAPI();
 });
